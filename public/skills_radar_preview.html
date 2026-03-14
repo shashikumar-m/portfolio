@@ -1,0 +1,266 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--font-sans);}
+.wrap{padding:1.5rem 0;}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:12px;}
+.top h2{font-size:18px;font-weight:500;color:var(--color-text-primary);}
+.top p{font-size:13px;color:var(--color-text-secondary);margin-top:3px;}
+.category-tabs{display:flex;gap:6px;flex-wrap:wrap;}
+.tab{font-size:12px;font-weight:500;padding:5px 14px;border-radius:100px;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;transition:all 0.15s;}
+.tab:hover{border-color:var(--color-border-secondary);color:var(--color-text-primary);}
+.tab.active{background:#e6f1fb;border-color:#b5d4f4;color:#0c447c;}
+.chart-area{display:grid;grid-template-columns:1fr 260px;gap:24px;align-items:start;}
+@media(max-width:600px){.chart-area{grid-template-columns:1fr;}}
+.radar-wrap{display:flex;justify-content:center;}
+.legend{display:flex;flex-direction:column;gap:8px;padding-top:12px;}
+.legend-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);cursor:pointer;transition:all 0.15s;}
+.legend-item:hover{border-color:var(--color-border-secondary);background:var(--color-background-secondary);}
+.legend-item.active-leg{border-color:#b5d4f4;background:#e6f1fb;}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.leg-name{font-size:13px;font-weight:500;color:var(--color-text-primary);flex:1;}
+.leg-val{font-size:13px;color:var(--color-text-secondary);}
+.leg-bar-bg{height:3px;background:var(--color-border-tertiary);border-radius:3px;margin-top:4px;overflow:hidden;}
+.leg-bar{height:100%;border-radius:3px;transition:width 0.4s ease;}
+.info-box{margin-top:16px;padding:12px 14px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);}
+.info-box h4{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;}
+.info-box p{font-size:12px;color:var(--color-text-secondary);line-height:1.5;}
+.info-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:100px;background:#e6f1fb;color:#0c447c;margin-top:6px;margin-right:4px;}
+.avg-row{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:12px;border-top:0.5px solid var(--color-border-tertiary);}
+.avg-label{font-size:12px;color:var(--color-text-secondary);}
+.avg-val{font-size:18px;font-weight:500;color:#185fa5;}
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <div><h2>Skills Radar</h2><p>Hover skills to inspect · click tabs to switch category</p></div>
+    <div class="category-tabs" id="tabs"></div>
+  </div>
+  <div class="chart-area">
+    <div class="radar-wrap"><canvas id="radar" width="360" height="360"></canvas></div>
+    <div class="legend">
+      <div id="legend-items"></div>
+      <div class="avg-row">
+        <span class="avg-label">Category average</span>
+        <span class="avg-val" id="avg-val">—</span>
+      </div>
+      <div class="info-box" id="info-box">
+        <h4 id="info-name">Hover a skill</h4>
+        <p id="info-desc">Move your cursor over any point on the chart to see details about that skill.</p>
+        <div id="info-tags"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const CATS = {
+  Frontend: {
+    color:'#378add',
+    fill:'rgba(55,138,221,0.15)',
+    stroke:'rgba(55,138,221,0.85)',
+    skills:[
+      {name:'React / Next.js',val:92,desc:'Building production SPAs and SSR apps. Used in 10+ projects.',tags:['React','Next.js','Hooks','RSC']},
+      {name:'TypeScript',val:85,desc:'Strongly typed frontend code. Reduced runtime bugs by 60% in past role.',tags:['TypeScript','Generics','Zod']},
+      {name:'CSS / Tailwind',val:88,desc:'Responsive layouts, animations, design systems from scratch.',tags:['CSS','Tailwind','Animations']},
+      {name:'GraphQL',val:72,desc:'Client-side queries with Apollo and React Query integrations.',tags:['Apollo','GraphQL','React Query']},
+      {name:'Testing',val:68,desc:'Jest, React Testing Library, Cypress for E2E coverage.',tags:['Jest','Cypress','RTL']},
+      {name:'Performance',val:80,desc:'Core Web Vitals 95+. Bundle splitting, lazy loading, caching.',tags:['Lighthouse','Webpack','Vite']},
+    ]
+  },
+  Backend: {
+    color:'#1d9e75',
+    fill:'rgba(29,158,117,0.15)',
+    stroke:'rgba(29,158,117,0.85)',
+    skills:[
+      {name:'Node.js',val:88,desc:'REST & GraphQL APIs, microservices, real-time WebSocket servers.',tags:['Express','Fastify','WebSocket']},
+      {name:'Python',val:80,desc:'FastAPI, Django, data processing scripts and ML pipelines.',tags:['FastAPI','Django','Pandas']},
+      {name:'PostgreSQL',val:75,desc:'Schema design, indexing, query optimization, migrations.',tags:['PostgreSQL','Prisma','SQL']},
+      {name:'Redis',val:65,desc:'Caching, pub/sub, rate limiting and session management.',tags:['Redis','Caching','Pub/Sub']},
+      {name:'Docker / K8s',val:70,desc:'Containerized apps, Helm charts, production K8s deployments.',tags:['Docker','Kubernetes','Helm']},
+      {name:'AWS',val:68,desc:'EC2, S3, Lambda, RDS, CloudFront. AWS Solutions Architect certified.',tags:['AWS','Lambda','S3','RDS']},
+    ]
+  },
+  Soft: {
+    color:'#ba7517',
+    fill:'rgba(186,117,23,0.15)',
+    stroke:'rgba(186,117,23,0.85)',
+    skills:[
+      {name:'Problem Solving',val:95,desc:'7 hackathons, competitive coding background. Fast under pressure.',tags:['Algorithms','Hackathons','DSA']},
+      {name:'Communication',val:85,desc:'Tech talks at ReactConf & PyCon. Clear writing and documentation.',tags:['Public Speaking','Writing','Docs']},
+      {name:'Teamwork',val:90,desc:'Led cross-functional squads. Strong async-first collaboration.',tags:['Leadership','Agile','Scrum']},
+      {name:'Learning',val:98,desc:'4 certifications in 2 years. Always upskilling. Lifelong learner.',tags:['Certifications','Curiosity','Growth']},
+      {name:'Ownership',val:88,desc:'Take full accountability from design to deployment. Ship fast.',tags:['Accountability','Proactive']},
+      {name:'Creativity',val:82,desc:'UI/UX sensibility, unique solutions, design thinking mindset.',tags:['Design Thinking','Innovation']},
+    ]
+  }
+};
+
+let activeCat = 'Frontend';
+let hoveredIdx = -1;
+const canvas = document.getElementById('radar');
+const ctx = canvas.getContext('2d');
+const W = 360, H = 360, cx = W/2, cy = H/2, R = 130;
+
+function buildTabs(){
+  const el = document.getElementById('tabs');
+  el.innerHTML = Object.keys(CATS).map(k=>`<button class="tab${k===activeCat?' active':''}" onclick="switchCat('${k}')">${k}</button>`).join('');
+}
+
+function switchCat(k){
+  activeCat = k;
+  hoveredIdx = -1;
+  buildTabs();
+  draw();
+  buildLegend();
+  resetInfo();
+}
+
+function pts(skills, scale=1){
+  return skills.map((_,i)=>{
+    const a = (i/skills.length)*Math.PI*2 - Math.PI/2;
+    const r = R * scale;
+    return [cx + Math.cos(a)*r, cy + Math.sin(a)*r];
+  });
+}
+
+function draw(){
+  const cat = CATS[activeCat];
+  const skills = cat.skills;
+  const n = skills.length;
+  ctx.clearRect(0,0,W,H);
+
+  // grid rings
+  [0.25,0.5,0.75,1].forEach(s=>{
+    ctx.beginPath();
+    pts(skills,s).forEach(([x,y],i)=>i===0?ctx.moveTo(x,y):ctx.lineTo(x,y));
+    ctx.closePath();
+    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--color-border-tertiary') || 'rgba(0,0,0,0.1)';
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+  });
+
+  // axes
+  skills.forEach((_,i)=>{
+    const a = (i/n)*Math.PI*2 - Math.PI/2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx+Math.cos(a)*R, cy+Math.sin(a)*R);
+    ctx.strokeStyle = 'rgba(128,128,128,0.2)';
+    ctx.lineWidth = 0.5;
+    ctx.stroke();
+  });
+
+  // filled polygon
+  const valPts = skills.map((s,i)=>{
+    const a = (i/n)*Math.PI*2 - Math.PI/2;
+    const r = R * s.val/100;
+    return [cx+Math.cos(a)*r, cy+Math.sin(a)*r];
+  });
+  ctx.beginPath();
+  valPts.forEach(([x,y],i)=>i===0?ctx.moveTo(x,y):ctx.lineTo(x,y));
+  ctx.closePath();
+  ctx.fillStyle = cat.fill;
+  ctx.fill();
+  ctx.strokeStyle = cat.stroke;
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  // dots
+  valPts.forEach(([x,y],i)=>{
+    const isH = i===hoveredIdx;
+    ctx.beginPath();
+    ctx.arc(x,y,isH?7:4,0,Math.PI*2);
+    ctx.fillStyle = isH ? cat.color : cat.stroke;
+    ctx.fill();
+    if(isH){
+      ctx.beginPath();ctx.arc(x,y,10,0,Math.PI*2);
+      ctx.fillStyle = cat.fill;ctx.fill();
+    }
+  });
+
+  // labels
+  skills.forEach((s,i)=>{
+    const a = (i/n)*Math.PI*2 - Math.PI/2;
+    const lx = cx+Math.cos(a)*(R+20);
+    const ly = cy+Math.sin(a)*(R+20);
+    ctx.font = `${i===hoveredIdx?'500 13px':'400 12px'} var(--font-sans, sans-serif)`;
+    ctx.fillStyle = i===hoveredIdx ? cat.color : 'rgba(128,128,128,0.85)';
+    ctx.textAlign = Math.abs(lx-cx)<5?'center':lx>cx?'left':'right';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(s.name.split(' ')[0], lx, ly);
+  });
+
+  // center pct label
+  if(hoveredIdx>=0){
+    const s = skills[hoveredIdx];
+    ctx.font = '500 22px var(--font-sans, sans-serif)';
+    ctx.fillStyle = cat.color;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(s.val+'%', cx, cy-8);
+    ctx.font = '400 11px var(--font-sans, sans-serif)';
+    ctx.fillStyle = 'rgba(128,128,128,0.7)';
+    ctx.fillText('proficiency', cx, cy+14);
+  }
+}
+
+function buildLegend(){
+  const cat = CATS[activeCat];
+  const avg = Math.round(cat.skills.reduce((a,s)=>a+s.val,0)/cat.skills.length);
+  document.getElementById('avg-val').textContent = avg+'%';
+  document.getElementById('legend-items').innerHTML = cat.skills.map((s,i)=>`
+    <div class="legend-item${i===hoveredIdx?' active-leg':''}" onmouseenter="hoverSkill(${i})" onmouseleave="unhover()">
+      <span class="legend-dot" style="background:${cat.color}"></span>
+      <div style="flex:1;">
+        <div style="display:flex;justify-content:space-between;">
+          <span class="leg-name">${s.name}</span>
+          <span class="leg-val">${s.val}%</span>
+        </div>
+        <div class="leg-bar-bg"><div class="leg-bar" style="width:${s.val}%;background:${cat.color}"></div></div>
+      </div>
+    </div>`).join('');
+}
+
+function hoverSkill(i){
+  hoveredIdx = i;
+  draw();
+  buildLegend();
+  const s = CATS[activeCat].skills[i];
+  document.getElementById('info-name').textContent = s.name;
+  document.getElementById('info-desc').textContent = s.desc;
+  document.getElementById('info-tags').innerHTML = s.tags.map(t=>`<span class="info-tag">${t}</span>`).join('');
+}
+
+function unhover(){
+  hoveredIdx = -1;
+  draw();
+  buildLegend();
+  resetInfo();
+}
+
+function resetInfo(){
+  document.getElementById('info-name').textContent = 'Hover a skill';
+  document.getElementById('info-desc').textContent = 'Move your cursor over any point on the chart to see details.';
+  document.getElementById('info-tags').innerHTML = '';
+}
+
+canvas.addEventListener('mousemove', e=>{
+  const rect = canvas.getBoundingClientRect();
+  const mx = (e.clientX-rect.left)*(W/rect.width);
+  const my = (e.clientY-rect.top)*(H/rect.height);
+  const cat = CATS[activeCat];
+  const n = cat.skills.length;
+  let found = -1;
+  cat.skills.forEach((s,i)=>{
+    const a = (i/n)*Math.PI*2-Math.PI/2;
+    const r = R*s.val/100;
+    const px = cx+Math.cos(a)*r, py = cy+Math.sin(a)*r;
+    if(Math.hypot(mx-px,my-py)<18) found=i;
+  });
+  if(found!==hoveredIdx){found>=0?hoverSkill(found):unhover();}
+});
+canvas.addEventListener('mouseleave', ()=>unhover());
+
+buildTabs(); draw(); buildLegend();
+</script>
