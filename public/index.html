@@ -447,7 +447,7 @@ footer span{color:var(--accent);}
         <p class="about-text">When I'm not coding, you'll find me at hackathons, reading about cloud architecture, or mentoring fellow developers.</p>
         <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">
           <a href="#contact" class="btn-primary" style="font-size:13px;padding:10px 20px;">Hire Me ↗</a>
-          <a href="#" class="btn-outline" style="font-size:13px;padding:9px 20px;">↓ Resume</a>
+          <a href="https://drive.google.com/file/d/1ePtSvFabMm4nIwQ7rXACmoESooGujJRY/view?usp=sharing" class="btn-outline" style="font-size:13px;padding:9px 20px;">↓ Resume</a>
         </div>
       </div>
       <div class="reveal" style="transition-delay:.1s;">
@@ -586,10 +586,9 @@ footer span{color:var(--accent);}
     <div class="resume-banner glass reveal">
       <div style="font-family:var(--sg);font-size:26px;font-weight:700;margin-bottom:10px;">Want my complete resume?</div>
       <div style="font-size:15px;color:var(--fg2);margin-bottom:28px;">Download to see my full professional journey, skills, and project details.</div>
-      <button class="btn-primary" onclick="showToast('Add your PDF link in the code!')">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download Resume
-      </button>
+      <a href="https://drive.google.com/file/d/1ePtSvFabMm4nIwQ7rXACmoESooGujJRY/view?usp=sharing" target="_blank" class="btn-primary">
+Download Resume
+</a>
     </div>
   </div>
 </section>
@@ -703,32 +702,38 @@ footer span{color:var(--accent);}
 let likedPosts=new Set(),isDark=true;
 /* ══ DATA ══ */
 const SD=[
-  {name:'React / Next.js',level:92,icon:'⚛️',color:'#61dafb'},
+  {name:'HTML5 / CSS3',level:92,icon:'🌐',color:'#61dafb'},
+  {name:'JavaScript (ES6+)',level:92,icon:'⚡',color:'#61dafb'},
+  {name:'Tailwind CSS',level:92,icon:'🎨',color:'#61dafb'},
   {name:'Node.js',level:88,icon:'🟢',color:'#339933'},
-  {name:'TypeScript',level:85,icon:'💙',color:'#3178c6'},
-  {name:'Python',level:80,icon:'🐍',color:'#3776ab'},
-  {name:'PostgreSQL',level:75,icon:'🐘',color:'#4169e1'},
-  {name:'Docker',level:70,icon:'🐳',color:'#2496ed'},
+  {name:'JWT Authentication',level:88,icon:'🔐',color:'#339933'},
+  {name:'REST API Design',level:88,icon:'🔗',color:'#339933'},
+  {name:'MongoDB',level:88,icon:'🍃',color:'#339933'},
+  {name:'Git / GitHub',level:85,icon:'🧰',color:'#3178c6'},
   {name:'AWS',level:68,icon:'☁️',color:'#ff9900'},
-  {name:'GraphQL',level:72,icon:'◈',color:'#e10098'},
 ];
 const PD=[
-  {title:'AI Chatbot Assistant',desc:'Intelligent conversational AI powered by GPT-4 with context awareness and multi-language support.',tech:['Python','TensorFlow','FastAPI','React'],cat:'ai',emoji:'🤖'},
-  {title:'DataFlow Dashboard',desc:'Real-time analytics platform processing 10M+ events/day with live charts and intelligent alerting.',tech:['React','Node.js','Redis','WebSocket'],cat:'fullstack',emoji:'📊'},
-  {title:'OpenAPI Gateway',desc:'Rate-limited REST gateway with JWT auth, request caching, and auto OpenAPI spec generation.',tech:['Express','Redis','PostgreSQL'],cat:'fullstack',emoji:'🔀'},
-  {title:'Network Security Scanner',desc:'Automated vulnerability scanner for identifying security threats and generating detailed reports.',tech:['Python','Docker','Cybersecurity'],cat:'security',emoji:'🛡️'},
-  {title:'ML Image Classifier',desc:'Deep learning model for image classification with 95% accuracy on custom datasets.',tech:['Python','TensorFlow','Keras'],cat:'ai',emoji:'🧠'},
-  {title:'TaskForge App',desc:'Cross-platform productivity app with offline sync and real-time collaboration.',tech:['React Native','Supabase','Expo'],cat:'fullstack',emoji:'📱'},
+  //{title:'AI Chatbot Assistant',desc:'Intelligent conversational AI powered by GPT-4 with context awareness and multi-language support.',tech:['Python','TensorFlow','FastAPI','React'],cat:'ai',emoji:'🤖'},
+  //{title:'DataFlow Dashboard',desc:'Real-time analytics platform processing 10M+ events/day with live charts and intelligent alerting.',tech:['React','Node.js','Redis','WebSocket'],cat:'fullstack',emoji:'📊'},
+  //{title:'OpenAPI Gateway',desc:'Rate-limited REST gateway with JWT auth, request caching, and auto OpenAPI spec generation.',tech:['Express','Redis','PostgreSQL'],cat:'fullstack',emoji:'🔀'},
+  //{title:'Network Security Scanner',desc:'Automated vulnerability scanner for identifying security threats and generating detailed reports.',tech:['Python','Docker','Cybersecurity'],cat:'security',emoji:'🛡️'},
+  //{title:'ML Image Classifier',desc:'Deep learning model for image classification with 95% accuracy on custom datasets.',tech:['Python','TensorFlow','Keras'],cat:'ai',emoji:'🧠'},
+  //{title:'TaskForge App',desc:'Cross-platform productivity app with offline sync and real-time collaboration.',tech:['React Native','Supabase','Expo'],cat:'fullstack',emoji:'📱'},
+  {title:'Shreemata Bookstore Website',desc:'A bookstore platform developed for Shreemata organization to showcase books, manage listings, and allow users to browse and explore available publications.',tech:['HTML','CSS','JavaScript','Node.js','MongoDB'],cat:'ai',emoji:'📚'},
+  {title:'FacePaint Event Webpage',desc:'Interactive event webpage created for a FacePaint event, allowing participants to view event details, schedule, and register online.',tech:['HTML','CSS','JavaScript','Responsive Design'],cat:'ai',emoji:'🎨'},
+  {title:'Smart Attendance System (IP + GPS)',desc:'A secure attendance system that verifies user presence using IP address and GPS location, preventing proxy attendance and ensuring location validation.',tech:['HTML','CSS','JavaScript','Responsive Design','Node.js','Geolocation API','IP Verification'],cat:'ai',emoji:'📍'},
+  {title:'Simple Online Voting System',desc:'A lightweight voting platform that allows users to cast votes securely with basic authentication and real-time vote counting.',tech:['HTML','CSS','JavaScript','Responsive Design','Node.js'],cat:'ai',emoji:'🗳️'},
+  {title:'Workshop Registration System',desc:'Web-based registration system for workshops where participants can register, submit details, and receive confirmation.',tech:['HTML','CSS','JavaScript','Form Validation','Node.js'],cat:'ai',emoji:'📝'},
+  {title:'Smart Grocery Chit System',desc:'A full-stack grocery ordering system with user authentication, item selection, order tracking, and automated email reminders.',tech:['Node.js','Express','MongoDB','HTML/CSS/JS','Nodemailer'],cat:'ai',emoji:'🛒'},
+  {title:'AI Vehicle Damage Detection',desc:'Computer vision system that detects vehicle damage using YOLO deep learning models.',tech:['Python','PyTorch','YOLOv8','Streamlit'],cat:'ai',emoji:'🤖'},
 ];
 const TL=[
-  {year:'2016',e:'🏫',t:'Joined A.G.M Rural Engineering College',o:'Varur, Hubbli, Karnataka',d:'Started B.E. Engineering. First step into the world of computers and technology.'},
-  {year:'2018',e:'💡',t:'Built first web project',o:'College Project',d:'Created a fully functional web application as coursework. Fell in love with building things.'},
-  {year:'2019',e:'🛠️',t:'First internship',o:'WebAgency Co.',d:'Worked on real client projects, learned responsive UI and professional coding practices.'},
-  {year:'2020',e:'🎓',t:'Graduated — B.E. Engineering',o:'A.G.M Rural Engineering College',d:'Completed degree with final year project on distributed systems.'},
-  {year:'2020',e:'🚀',t:'First full-time role',o:'StartupXYZ',d:'Joined as Full-Stack Developer. Shipped 3 full products from scratch in 2 years.'},
-  {year:'2022',e:'📈',t:'Promoted to Senior Engineer',o:'TechCorp Inc.',d:'Leading frontend architecture for a SaaS platform serving 50k+ users.'},
-  {year:'2025',e:'🏆',t:'Won HackSphere 2025',o:'National Hackathon',d:'1st place — Best AI Application. Built an LLM-powered code review bot in 36 hours.'},
-  {year:'2026',e:'🌟',t:"What's next?",o:'The journey continues...',d:"Open to exciting opportunities and collaborations. Let's build something amazing!"},
+  {year:'2023',e:'🏫',t:'Joined A.G.M Rural Engineering College',o:'Varur, Hubbli, Karnataka',d:'Started B.E. Engineering. First step into the world of computers and technology.'},
+  {year:'2023',e:'💡',t:'Built first web project',o:'College Project',d:'Created a fully functional web application as coursework. Fell in love with building things.'},
+  {year:'2024',e:'📑',t:'IEEE Research Paper Presentation',o:'Technical Conference',d:'Presented a research paper under IEEE, gaining experience in academic research, technical writing, and presenting innovative ideas.'},
+  {year:'2025',e:'🎤',t:'Conducted College Technical Event',o:'Campus Activity',d:'Organized and conducted a technical event at college, managing event coordination, participant engagement, and technical sessions.'},
+  {year:'2025',e:'💻',t:'Participated in Hackathon',o:'Coding Competition',d:'Participated in a hackathon and collaborated with a team to develop a rapid prototype solution within a limited time.'},
+  {year:'2026',e:'🚀',t:"Building Projects & Skills",o:'2025 – Present',d:"Developing projects in AI, web development, and cybersecurity, including chatbots, full-stack applications, and machine learning systems."},
 ];
 const AC=[
   {t:'HackSphere 2025',s:'1st Place — Best AI App',d:'National hackathon, 36-hour build. Our team built an LLM-powered code review bot and won Best AI Application out of 200+ teams.',i:'🏆',
@@ -745,9 +750,9 @@ const AC=[
    imgs:['photo1.jpg'],imgLabels:['Contribution Screenshot']},
 ];
 const AT=[
-  {type:'hackathon',time:'2 days ago',title:'Won 1st place — HackSphere 2025',body:'Our team won <strong>Best AI Application</strong> at HackSphere 2025! Built an LLM-powered code review bot in 36 hours.',tags:['#HackSphere2025','#AI','#Winner'],emoji:'🏆',likes:142,comments:38,
+  {type:'paper presentation',time:'2 Years ago',title:'participated',body:'',tags:['#HackSphere2025','#AI','#Winner'],emoji:'🏆',likes:142,comments:38,
    detail:'The problem statement was to build a developer productivity tool using AI. We designed an LLM pipeline that reviews pull requests, detects anti-patterns, suggests refactors, and even writes test cases automatically. The judges were impressed by the demo — our bot reviewed a 500-line PR in under 8 seconds with actionable feedback.',
-   imgs:['hack1.jpg','hack2.jpg','hack3.jpg'],imgLabels:['Award ceremony','Our team presenting','Working on the project']},
+   imgs:['paper/hack1.jpg','paper/hack2.jpg','paper/hack3.jpg'],imgLabels:['My team and Friends group','My friends ','Presenatation']},
   {type:'cert',time:'1 week ago',title:'AWS Solutions Architect — Professional',body:'Passed the <strong>AWS Solutions Architect Professional</strong> exam after months of preparation.',tags:['#AWS','#Certification'],emoji:'📜',likes:98,comments:21,
    detail:'After 3 months of study covering VPC, IAM, EC2, Lambda, RDS, DynamoDB, CloudFront, Route53, and multi-region architectures — I cleared the AWS SAP-C02 exam with a score of 847/1000. This certification validates my ability to design complex, highly available, cost-efficient AWS solutions.',
    imgs:['cert1.jpg'],imgLabels:['AWS Certificate']},
@@ -791,14 +796,9 @@ const GT=[
   {label:'React',cat:'frontend',color:'#00c8ff',level:92,size:16},{label:'Next.js',cat:'frontend',color:'#00c8ff',level:83,size:14},
   {label:'TypeScript',cat:'frontend',color:'#00c8ff',level:85,size:15},{label:'CSS',cat:'frontend',color:'#00c8ff',level:88,size:13},
   {label:'Tailwind',cat:'frontend',color:'#00c8ff',level:86,size:13},{label:'GraphQL',cat:'frontend',color:'#00c8ff',level:72,size:12},
-  {label:'Vue.js',cat:'frontend',color:'#00c8ff',level:65,size:11},{label:'Node.js',cat:'backend',color:'#00ff88',level:88,size:16},
-  {label:'Python',cat:'backend',color:'#00ff88',level:80,size:14},{label:'FastAPI',cat:'backend',color:'#00ff88',level:75,size:12},
-  {label:'PostgreSQL',cat:'backend',color:'#00ff88',level:75,size:13},{label:'Redis',cat:'backend',color:'#00ff88',level:65,size:11},
   {label:'REST API',cat:'backend',color:'#00ff88',level:90,size:13},{label:'Docker',cat:'tools',color:'#f59e0b',level:70,size:13},
   {label:'AWS',cat:'tools',color:'#f59e0b',level:68,size:14},{label:'Kubernetes',cat:'tools',color:'#f59e0b',level:65,size:12},
   {label:'Git',cat:'tools',color:'#f59e0b',level:95,size:13},{label:'GitHub',cat:'tools',color:'#f59e0b',level:93,size:12},
-  {label:'Linux',cat:'tools',color:'#f59e0b',level:72,size:11},{label:'Vite',cat:'tools',color:'#f59e0b',level:80,size:11},
-  {label:'Figma',cat:'tools',color:'#f59e0b',level:70,size:11},
 ];
 
 
@@ -1155,16 +1155,11 @@ if(RC_el){RC_el.addEventListener('mousemove',e=>{const rect=RC_el.getBoundingCli
 /* ══ MODALS ══ */
 function makeImgSlots(imgs,labels){
   return imgs.map((src,i)=>`
-    <div class="img-slot" onclick="showToast('Replace \\'${src}\\' with your real image path in the AT/AC data arrays')">
-      <span class="img-slot-num">${i+1}</span>
-      <span class="img-slot-icon">🖼️</span>
-      <div class="img-slot-label">${labels[i]||'Photo '+(i+1)}<br><span style="font-size:10px;color:var(--accent);font-family:var(--mono);">${src}</span></div>
-    </div>`).join('');
-  /* ── HOW TO ADD YOUR REAL IMAGES ──
-     Replace each img-slot div with:
-     <div class="img-slot"><img src="YOUR_IMAGE.jpg" alt="label"></div>
-     OR set src in the data array to a real URL/path.
-  */
+    <div class="img-slot">
+      <img src="${src}" alt="${labels[i] || 'Photo'}">
+      <div class="img-slot-label">${labels[i] || 'Photo '+(i+1)}</div>
+    </div>
+  `).join('');
 }
 
 function openAchModal(i){
