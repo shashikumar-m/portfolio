@@ -47,6 +47,30 @@ res.status(500).json({error:"Error fetching visitors"});
 }
 });
 
+
+app.delete("/clear-visitors", async (req,res)=>{
+await Visitor.deleteMany({});
+res.json({message:"All visitors deleted"});
+});
+
+function showPage(name){
+
+if(name==="visitors"){
+let pass = prompt("Admin password:");
+if(pass!=="admin123"){
+alert("Access denied");
+return;
+}
+}
+
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById('page-'+name).classList.add('active');
+
+window.scrollTo({top:0,behavior:'smooth'});
+
+if(name==='visitors') renderVisitorTable();
+}
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, ()=>{

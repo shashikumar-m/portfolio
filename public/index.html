@@ -834,7 +834,7 @@ date: now.toLocaleDateString(),
 time: now.toLocaleTimeString()
 };
 
-fetch(API + "/visitor",{
+await fetch(API + "/visitor",{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
@@ -847,6 +847,7 @@ updateVC();
 }
 /* ══ VISITOR COUNT ══ */
 async function updateVC(){
+try{
 
 const res = await fetch(API + "/visitors");
 const visitors = await res.json();
@@ -859,6 +860,10 @@ document.getElementById("hero-vc").textContent = n;
 const badge = document.getElementById("v-badge");
 if(badge){
 badge.textContent = "👥 " + n + " visitors";
+}
+
+}catch(err){
+console.log("Visitor API error:",err);
 }
 }
 
@@ -886,7 +891,17 @@ tb.innerHTML = visitors.map((v,i)=>`
 `).join("");
 
 }
-function clearVisitors(){if(!confirm('Clear all visitor data?'))return;saveV([]);updateVC();renderVisitorTable();}
+async function clearVisitors(){
+
+if(!confirm("Delete all visitors from database?")) return;
+
+await fetch(API + "/clear-visitors",{
+method:"DELETE"
+});
+
+updateVC();
+renderVisitorTable();
+}
 
 /* ══ THEME ══ */
 function toggleTheme(){isDark=!isDark;document.body.setAttribute('data-theme',isDark?'dark':'light');localStorage.setItem('sm_theme',isDark?'dark':'light');setTimeout(rDraw,50);}
